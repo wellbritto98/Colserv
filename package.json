@@ -1,0 +1,45 @@
+{
+  "name": "colserv",
+  "productName": "colserv",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "concurrently \"npm run build:css\" \"electron-forge start\"",
+    "build:css": "tailwindcss -i ./src/styles/inputTailwind.css -o ./src/styles/index.css --watch",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate",
+    "lint": "echo \"No linting configured\""
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron/fuses": "^1.8.0",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
+    "electron": "32.1.0",
+    "postcss": "^8.4.47",
+    "prisma": "^5.19.1",
+    "tailwindcss": "^3.4.11"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Jose Wellington",
+    "email": "josewellington@infowsoftware.com.br"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@material-tailwind/html": "^2.3.2",
+    "@prisma/client": "^5.19.1",
+    "bcrypt": "^5.1.1",
+    "electron-squirrel-startup": "^1.0.1"
+  }
+}
