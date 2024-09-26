@@ -20,7 +20,7 @@ const createWindow = async () => {
   });
 
   // Load the index.html of the app.
-  await mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  await mainWindow.loadFile(path.join(__dirname+"/pages", 'signin.html'));
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

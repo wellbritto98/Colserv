@@ -12,10 +12,11 @@ model User {
   name     String
   email    String  @unique
   password String
-  cpf      String  @unique
-  phone    String
-  address  String
-  city     String
-  state    String
-  zip      String
+  cpf      String  @unique // Example default CPF
+  phone    String  @default("Unknown")             // Example default phone
+  address  String  @default("Not provided")        // Example default address
+  city     String  @default("Not provided")        // Example default city
+  state    String  @default("Not provided")        // Example default state
+  zip      String  @default("00000")               // Example default ZIP code
 }
+
