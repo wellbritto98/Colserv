@@ -76,6 +76,32 @@ const registerIpcHandlers = () => {
       throw error;
     }
   });  
+
+   // Atualiza o telefone, email e endereço do usuário
+   ipcMain.handle('update-user-info', async (event, { userId, email, phone, address }) => {
+    try {
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          email,
+          phone,
+          address,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          address: true
+        },
+      });
+      return updatedUser;
+    } catch (error) {
+      console.error('Erro ao atualizar informações do usuário:', error);
+      throw error;
+    }
+  });
 };
 
 module.exports = { registerIpcHandlers };
+
