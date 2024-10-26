@@ -57,6 +57,25 @@ const registerIpcHandlers = () => {
       throw error;
     }
   });
+
+  // Lista todos os usuários cadastrados
+  ipcMain.handle('list-users', async () => {
+    try {
+      const users = await prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          cpf: true
+        },
+      });
+      return users;
+    } catch (error) {
+      console.error('Erro ao listar usuários:', error);
+      throw error;
+    }
+  });  
 };
 
 module.exports = { registerIpcHandlers };
