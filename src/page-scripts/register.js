@@ -1,4 +1,5 @@
 const form = document.getElementById("signup-form");
+const alertContainer = document.getElementById("alert-container");
 
 function formatCPF(input) {
   // Remove tudo que não for número
@@ -71,7 +72,6 @@ form.addEventListener("submit", async (event) => {
 
   try {
     const result = await window.electronAPI.registerUser({
-      role,
       name,
       email,
       password,
@@ -80,13 +80,39 @@ form.addEventListener("submit", async (event) => {
       address,
       city,
       state,
-      zip,
+      zip
     });
-    alert("Usuário cadastrado com sucesso:", result);
-    window.location.href = "../pages/signin.html";
-    // Aqui você pode redirecionar o usuário, mostrar uma mensagem de sucesso, etc.
+    showAlert('success', 'Usuário cadastrado com sucesso!');
   } catch (error) {
-    console.error("Erro ao cadastrar usuário:", error);
-    // Mostrar mensagem de erro ao usuário
+    console.error('Erro ao cadastrar usuário:', error);
+    showAlert('error', 'Erro ao cadastrar usuário. Tente novamente.');
   }
 });
+
+function showAlert(type, message) {
+  const alertTypes = {
+    success: 'bg-green-500',
+    error: 'bg-red-500',
+  };
+
+  const alert = document.createElement('div');
+  alert.className = `flex items-center ${alertTypes[type]} text-white text-sm font-bold px-4 py-3 rounded relative`;
+  alert.setAttribute('role', 'alert');
+
+  const alertMessage = document.createElement('span');
+  alertMessage.className = 'block sm:inline';
+  alertMessage.textContent = message;
+
+  const closeButton = document.createElement('span');
+  closeButton.className = 'absolute top-0 bottom-0 right-0 px-4 py-3';
+  closeButton.innerHTML = '<svg class="fill-current h-6 w-6 text-white" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 5.652a1 1 0 00-1.414 0L10 8.586 7.066 5.652a1 1 0 10-1.414 1.414L8.586 10l-2.934 2.934a1 1 0 101.414 1.414L10 11.414l2.934 2.934a1 1 0 001.414-1.414L11.414 10l2.934-2.934a1 1 0 000-1.414z"/></svg>';
+  closeButton.onclick = () => alert.remove();
+
+  alert.appendChild(alertMessage);
+  alert.appendChild(closeButton);
+  alertContainer.appendChild(alert);
+
+  setTimeout(() => {
+    alert.remove();
+  }, 5000);
+}
