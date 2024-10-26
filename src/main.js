@@ -19,11 +19,24 @@ const createWindow = async () => {
     },
   });
 
-  // Load the index.html of the app.
-  await mainWindow.loadFile(path.join(__dirname+"/pages", 'signin.html'));
+  // Verificar estado de login antes de carregar a página
+  mainWindow.once('ready-to-show', async () => {
+    console.log('Verificando estado de login...');
+    const userCredentials = await mainWindow.webContents.executeJavaScript('localStorage.getItem("userCredentials")');
+    console.log('Estado de login:', userCredentials);
+    if (userCredentials) {
+      console.log('Usuário logado, redirecionando para homepage...');
+      await mainWindow.loadFile(path.join(__dirname, 'pages', 'homepage.html'));
+    } else {
+      console.log('Nenhum usuário logado, redirecionando para signin...');
+      await mainWindow.loadFile(path.join(__dirname, 'pages', 'signin.html'));
+    }
+  });
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // Load the index.html of the app.
+  await mainWindow.loadFile(path.join(__dirname, 'pages', 'signin.html'));
+
+ 
 };
 
 app.whenReady().then(() => {
