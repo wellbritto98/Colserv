@@ -22,9 +22,9 @@ const createWindow = async () => {
   // Verificar estado de login antes de carregar a página
   mainWindow.once('ready-to-show', async () => {
     console.log('Verificando estado de login...');
-    const user = await mainWindow.webContents.executeJavaScript('localStorage.getItem("user")');
-    console.log('Estado de login:', user);
-    if (user) {
+    const userCredentials = await mainWindow.webContents.executeJavaScript('localStorage.getItem("userCredentials")');
+    console.log('Estado de login:', userCredentials);
+    if (userCredentials) {
       console.log('Usuário logado, redirecionando para homepage...');
       await mainWindow.loadFile(path.join(__dirname, 'pages', 'homepage.html'));
     } else {
