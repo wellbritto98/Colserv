@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Detalhe do Chamado</title>
+</head>
+<body class="bg-gray-100">
+    <div class="flex items-center justify-center h-screen">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 class="text-2xl font-semibold text-gray-800">Detalhe do Chamado</h2>
+            <div class="mt-4">
+                <p class="text-gray-600"><strong>Código:</strong> <span id="codigo"></span></p>
+                <p class="text-gray-600"><strong>Descrição:</strong> <span id="descricao"></span></p>
+                <p class="text-gray-600"><strong>Status:</strong> <span id="status"></span></p>
+                <p class="text-gray-600"><strong>Data do Chamado:</strong> <span id="data"></span></p>
+            </div>
+            <div class="mt-6">
+                <button onclick="voltar()" class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Função para voltar à página anterior
+        function voltar() {
+            window.history.back();
+        }
+
+        // Função para obter os parâmetros da URL
+        function obterDetalhes() {
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById("codigo").innerText = params.get('codigo');
+            document.getElementById("descricao").innerText = params.get('descricao');
+            document.getElementById("status").innerText = params.get('status');
+            document.getElementById("data").innerText = params.get('data');
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = obterDetalhes;
+    </script>
+</body>
+</html>
