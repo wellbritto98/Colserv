@@ -38,6 +38,25 @@ const registerIpcHandlers = () => {
       throw error;
     }
   });
+
+  ipcMain.handle('login-user', async (event, { email, password }) => {
+    try {
+      const user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        throw new Error('Usuário não encontrado');
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new Error('Senha incorreta');
+      }
+
+      return { id: user.id, name: user.name, email: user.email };
+    } catch (error) {
+      console.error('Erro ao logar usuário:', error);
+      throw error;
+    }
+  });
 };
 
 module.exports = { registerIpcHandlers };
