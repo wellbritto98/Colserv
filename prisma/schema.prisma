@@ -9,6 +9,7 @@ generator client {
 
 model User {
   id       Int     @id @default(autoincrement())
+  role     String  @default("USER")
   name     String
   email    String  @unique
   password String
@@ -19,4 +20,3 @@ model User {
   state    String  @default("Not provided")        // Example default state
   zip      String  @default("00000")               // Example default ZIP code
 }
-
