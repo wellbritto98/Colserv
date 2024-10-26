@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <title>Homepage</title>
     <link rel="stylesheet" href="../styles/index.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
@@ -13,8 +13,6 @@
         crossorigin="anonymous" />
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-
-
 
 </head>
 
@@ -76,6 +74,10 @@
                                 type="text" placeholder="Search">
                         </div>
                     </div>
+                    <button id="logout-button" class="text-gray-500 focus:outline-none">
+                        <i class="material-icons">logout</i>
+                        <span class="mx-2">Sair</span>
+                    </button>
                 </header>
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container px-6 py-8 mx-auto">
@@ -258,7 +260,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <!-- from cdn -->
     <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
-
+    <script src="../page-scripts/homepage.js"></script> <!-- Adicione esta linha -->
 </body>
 
 </html>
