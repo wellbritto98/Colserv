@@ -1,0 +1,37 @@
+Table User {
+  id       int      [pk, increment]
+  role     Roles
+  name     varchar
+  email    varchar  [unique]
+  password varchar
+  cpf      varchar  [unique] // Example default CPF
+  phone    varchar  [default: "Unknown"]             // Example default phone
+  address  varchar  [default: "Not provided"]        // Example default address
+  city     varchar  [default: "Not provided"]        // Example default city
+  state    varchar  [default: "Not provided"]        // Example default state
+  zip      varchar  [default: "00000"]               // Example default ZIP code
+}
+
+Table Chamado {
+  id          int      [pk, increment]
+  title       varchar
+  description varchar
+  status      varchar
+  user_id     int     [ref: > User.id]
+  images      varchar[] // array de caminhos das imagens na pasta interna da aplicação
+  created_at  datetime
+  updated_at  datetime
+}
+
+Table Item {
+  id          int      [pk, increment]
+  name        varchar
+  description varchar
+  quantidade  varchar
+  chamado_id  int     [ref: > Chamado.id]
+}
+
+Enum Roles {
+  ADMIN
+  USER
+}
