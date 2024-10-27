@@ -1,129 +1,348 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Atualizar Usuário</title>
-    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/index.css" />
     <!-- Font Awesome Link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
-        crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
-        <!-- Sidebar / Aside -->
-        <aside :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-            class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
-            <div class="flex items-center justify-center mt-8">
-                <div class="flex items-center">
-                    <span class="material-icons text-white text-5xl">dashboard</span>
-                    <span class="mx-2 text-2xl font-semibold text-white">Dashboard</span>
-                </div>
-            </div>
-
-            <nav class="mt-10">
-                <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                    href="./homepage.html">
-                    <i class="material-icons">home</i>
-                    <span class="mx-3">Dashboard</span>
-                </a>
-
-                <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                    href="./listusers.html">
-                    <i class="material-icons">people</i>
-                    <span class="mx-3">Visualizar usuários</span>
-                </a>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <div class="flex flex-col flex-1 overflow-hidden">
-            <!-- Header -->
-
-            <!-- Main Section -->
-            <main class="bg-white p-8 rounded-lg shadow-md">
-                <form id="edit-user-form">
-                    <div class="mb-4">
-                        <label for="name" class="block text-gray-700">Nome:</label>
-                        <input type="text" id="name" required
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                    </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-gray-700">Email:</label>
-                        <input type="email" id="email" onblur="formatEmail(this)" required
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="block text-gray-700">Senha</label>
-                        <div class="relative">
-                            <input type="password" id="password"
-                                class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring focus:ring-blue-400"
-                                placeholder="Digite uma nova senha" />
-                            <button type="button" id="togglePassword"
-                                class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-6 eye-icon closed hidden">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-6 eye-icon open">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
-                                </svg>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="phone" class="block text-gray-700">Telefone:</label>
-                        <input type="tel" id="phone" required oninput="formatPhone(this)" onfocus="formatPhone(this)"
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                    </div>
-                    <div class="mb-4">
-                        <label for="address" class="block text-gray-700">Endereço:</label>
-                        <input type="text" id="address" required
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                    </div>
-                    <div class="mb-4">
-                        <label for="city" class="block text-gray-700">Cidade:</label>
-                        <input type="text" id="city" required
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                    </div>
-                    <div class="mb-4">
-                        <label for="state" class="block text-gray-700">Estado:</label>
-                        <input type="text" id="state" required
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                    </div>
-                    <div class="mb-4">
-                        <label for="zip" class="block text-gray-700">CEP:</label>
-                        <input type="text" id="zip" oninput="formatCEP(this)" onfocus="formatCEP(this)" required
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                    </div>
-                    <div class="text-right mt-6">
-                        <button id="form-button-submit" type="submit"
-                            class="middle none rounded-lg bg-gray-900 py-3 px-12 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                            Salvar
-                        </button>
-                    </div>
-                </form>
-            </main>
+      <!-- Sidebar / Aside -->
+      <aside
+        :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
+        class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0"
+      >
+        <div class="flex items-center justify-center mt-8">
+          <div class="flex items-center">
+            <span class="material-icons text-white text-5xl">people</span>
+            <span class="mx-2 text-2xl font-semibold text-white"
+              >Atualizar usuário</span
+            >
+          </div>
         </div>
+
+        <nav class="mt-10">
+          <a
+            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+            href="./homepage.html"
+          >
+            <i class="material-icons">home</i>
+            <span class="mx-3">Dashboard</span>
+          </a>
+
+          <a
+            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+            href="./listusers.html"
+          >
+            <i class="material-icons">people</i>
+            <span class="mx-3">Visualizar usuários</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="flex flex-col flex-1 overflow-hidden">
+        <!-- Header -->
+
+        <!-- Main Section -->
+        <main class="bg-gray-200 p-8 rounded-lg shadow-md overflow-y-auto">
+          <form class="space-y-8" id="edit-user-form">
+            <!-- Dados Pessoais -->
+            <fieldset class="border border-gray-300 p-4 rounded-md bg-white">
+              <legend class="text-lg font-medium text-gray-800">
+                Dados Pessoais
+              </legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label
+                    for="name"
+                    class="block text-sm font-medium text-gray-900 mb-2"
+                    >Nome:</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="cpf"
+                    class="block text-sm font-medium text-gray-900 mb-2"
+                    >CPF</label
+                  >
+                  <input
+                    id="cpf"
+                    name="cpf"
+                    type="text"
+                    disabled
+                    placeholder="000.000.000-00"
+                    class="w-full px-3 py-2 border rounded-md"
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Grupo de Contato -->
+            <fieldset class="bg-white border border-gray-300 p-4 rounded-md">
+              <legend class="text-lg font-medium text-gray-600">
+                Informações de Contato
+              </legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label for="email" class="block text-gray-700">Email:</label>
+                  <input
+                    type="email"
+                    id="email"
+                    onblur="formatEmail(this)"
+                    required
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="phone" class="block text-gray-700"
+                    >Telefone:</label
+                  >
+                  <input
+                    type="tel"
+                    id="phone"
+                    required
+                    oninput="formatPhone(this)"
+                    onfocus="formatPhone(this)"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="bg-white border border-gray-300 p-4 rounded-md">
+              <legend class="text-lg font-medium text-gray-600">
+                Informações de Acesso
+              </legend>
+              <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="relative">
+                  <div>
+                    <label
+                      for="password"
+                      class="block text-sm font-medium text-gray-900 mb-2"
+                      >Nova Senha</label
+                    >
+                    <div class="relative flex items-center">
+                      <input
+                        data-role="password"
+                        type="password"
+                        id="password"
+                        class="border border-gray-300 rounded-lg p-2 pr-10 w-full focus:outline-none focus:ring focus:ring-blue-400"
+                        placeholder="******"
+                        minlength="8"
+                        oninput="validatePassword(this)"
+                        disabled
+                      />
+                      <button
+                        data-role="button-toggle-password"
+                        type="button"
+                        id="togglePassword"
+                        class="absolute inset-y-0 right-0 pr-3"
+                        disabled
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="size-6 eye-icon closed hidden"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                          />
+                        </svg>
+
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="size-6 eye-icon open"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    for="password_confirmation"
+                    class="block text-sm font-medium text-gray-900 mb-2"
+                    >Confirmação de Nova Senha</label
+                  >
+                  <div class="relative flex items-center">
+                    <input
+                      data-role="password"
+                      type="password"
+                      id="password_confirmation"
+                      class="border border-gray-300 rounded-lg p-2 pr-10 w-full focus:outline-none focus:ring focus:ring-blue-400"
+                      placeholder="******"
+                      minlength="8"
+                      oninput="validatePassword(this)"
+                      disabled
+                    />
+                    <button
+                      data-role="button-toggle-password"
+                      type="button"
+                      id="togglePasswordConfirmation"
+                      class="absolute inset-y-0 right-0 pr-3"
+                      disabled
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-6 eye-icon closed hidden"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                        />
+                      </svg>
+
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-6 eye-icon open"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="changePasswordCheckbox" class="text-gray-700"
+                  >Desejo trocar a senha</label
+                >
+                <input
+                  type="checkbox"
+                  id="changePasswordCheckbox"
+                  class="mr-2"
+                />
+              </div>
+            </fieldset>
+
+            <fieldset class="bg-white border border-gray-300 p-4 rounded-md">
+              <legend class="text-lg font-medium text-gray-600">
+                Endereço
+              </legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="mb-4">
+                  <label for="address" class="block text-gray-700"
+                    >Endereço:</label
+                  >
+                  <input
+                    type="text"
+                    id="address"
+                    required
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="city" class="block text-gray-700">Cidade:</label>
+                  <input
+                    type="text"
+                    id="city"
+                    required
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="state" class="block text-gray-700">Estado:</label>
+                  <input
+                    type="text"
+                    id="state"
+                    required
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="zip" class="block text-gray-700">CEP:</label>
+                  <input
+                    type="text"
+                    id="zip"
+                    oninput="formatZip(this)"
+                    onfocus="formatZip(this)"
+                    required
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="text-right mt-6">
+              <button
+                id="form-button-submit"
+                type="submit"
+                class="middle none rounded-lg bg-gray-900 py-3 px-12 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              >
+                Salvar
+              </button>
+            </div>
+          </form>
+        </main>
+      </div>
     </div>
 
-    <script src="../page-scripts/edituser.js"></script>
-    <script src="../page-scripts/formattedInputs.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
-</body>
-
+    <script type="module" src="../page-scripts/edituser.js" defer></script>
+    <script src="../utils/formattingInput.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <script
+      src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"
+      defer
+    ></script>
+  </body>
 </html>
