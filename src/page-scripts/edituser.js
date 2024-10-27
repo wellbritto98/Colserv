@@ -15,7 +15,6 @@ function getUser() {
 
 function insertUserDataIntoForm(userData) {
   localStorage.setItem("userId", userData.id);
-  console.log(userData.password);
   document.getElementById("name").value = userData.name;
   document.getElementById("email").value = userData.email;
   document.getElementById("password").value = "";
