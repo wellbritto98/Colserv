@@ -50,11 +50,16 @@ function createEditButton(user) {
   editButton.type = "button";
 
   editButton.onclick = () => {
-    window.location.href = `edituser.html?id=${user.id}`;
+    window.location.href = `edituser.html`;
+    saveUserToEdit(user);
   };
 
   editButton.appendChild(editIcon);
   return editButton;
+}
+
+function saveUserToEdit(user) {
+  localStorage.setItem("User", JSON.stringify(user));
 }
 
 window.onload = fetchUsers();
