@@ -20,3 +20,8 @@ model User {
   zip      String  @default("00000")               // Example default ZIP code
 }
 
+model Chamado {
+  id          Int       @id @default(autoincrement())
+  titulo      String
+  descricao   String
+}
