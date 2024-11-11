@@ -9,6 +9,12 @@ function updateBorder(input, isValid) {
   input.classList.toggle("border-red-500", !isValid);
 }
 
+function formatName(input) {
+  const name = input.value.trim();
+
+  updateBorder(input, name.length >= 3);
+}
+
 // Formatação e validação de CPF
 function formatCPF(input) {
   let value = input.value.replace(/\D/g, "");
@@ -24,6 +30,8 @@ function formatCPF(input) {
       6,
       9
     )}-${value.slice(9, 11)}`;
+
+  updateBorder(input, value.length === 11);
 }
 
 function formatEmail(input) {

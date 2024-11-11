@@ -62,4 +62,45 @@ function saveUserToEdit(user) {
   localStorage.setItem("User", JSON.stringify(user));
 }
 
-window.onload = fetchUsers();
+function userWasUpdated() {
+  // Pega a mensagem de sucesso do localStorage
+  const successMessage = localStorage.getItem("updateSuccess");
+
+  if (successMessage) {
+    console.log("Success message:", successMessage);
+    // Exibe o alerta com a mensagem
+    document.getElementById("messageSuccessAlert").textContent = successMessage;
+    document.getElementById("successAlertContainer").classList.remove("hidden"); // Exibe o alerta
+
+    let timer = 5; // Tempo de exibição (em segundos)
+    let timeLeft = timer;
+
+    // Atualiza a barra de progresso
+    const timeBarProgress = document.getElementById("timeBarProgress");
+    const timeBarAlert = document.getElementById("timeBarAlert");
+
+    const interval = setInterval(function () {
+      if (timeLeft <= 0) {
+        // Esconde o alerta após o tempo
+        localStorage.removeItem("updateSuccess");
+        document
+          .getElementById("successAlertContainer")
+          .classList.add("hidden"); // Esconde o alerta
+        document.getElementById("messageSuccessAlert").textContent = ""; // Limpa o texto da mensagem
+
+        clearInterval(interval);
+      } else {
+        // Decrementa o tempo
+        timeLeft--;
+        // Atualiza a largura da barra com base no tempo restante
+        const progressWidth = (timeLeft / timer) * 100; // Calcula a porcentagem
+        timeBarProgress.style.width = progressWidth + "%";
+      }
+    }, 1000); // A cada segundo, o timer é decrementado
+  }
+}
+
+window.onload = () => {
+  fetchUsers();
+  userWasUpdated();
+};
