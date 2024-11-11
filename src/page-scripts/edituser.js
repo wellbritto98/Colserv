@@ -23,12 +23,13 @@ function insertUserDataIntoForm(userData) {
   localStorage.setItem("userId", userData.id);
   document.getElementById("name").value = userData.name;
   document.getElementById("email").value = userData.email;
+  document.getElementById("cpf").value = formatDataCPF(userData.cpf);
   document.getElementById("password").value = "";
-  document.getElementById("phone").value = userData.phone;
+  document.getElementById("phone").value = formatDataPhone(userData.phone);
   document.getElementById("address").value = userData.address;
   document.getElementById("city").value = userData.city;
   document.getElementById("state").value = userData.state;
-  document.getElementById("zip").value = userData.zip;
+  document.getElementById("zip").value = formatDataZip(userData.zip);
 }
 
 function togglePasswordVisibility(button, index) {
