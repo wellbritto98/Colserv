@@ -85,32 +85,20 @@ const registerIpcHandlers = () => {
     }
   });
 
-  ipcMain.handle("update-user-info", async (event, userData) => {
+  ipcMain.handle("update-user", async (event, userData) => {
     try {
-      let hashedPassword;
-      if (userData.password.length >= 3) {
-        hashedPassword = await bcrypt.hash(userData.password, 10);
-      } else {
-        const existingUser = await prisma.user.findUnique({
-          where: { id: userData.id },
-          select: { password: true },
-        });
-
-        hashedPassword = existingUser.password;
-      }
-
       const updatedUser = await prisma.user.update({
         where: { id: userData.id },
         data: {
           name: userData.name,
           email: userData.email,
-          password: hashedPassword,
           phone: userData.phone,
           address: userData.address,
           city: userData.city,
           state: userData.state,
           zip: userData.zip,
-          role: userData.role, // Adicione o campo role aqui
+          role: userData.role, // Certifique-se de que o campo role está sendo atualizado
+          password: userData.password !== 0 ? await bcrypt.hash(userData.password, 10) : undefined,
         },
       });
       return updatedUser;
@@ -118,6 +106,6 @@ const registerIpcHandlers = () => {
       throw error;
     }
   });
-};
+}
 
 module.exports = { registerIpcHandlers };

@@ -3,7 +3,19 @@ import {
   removeFormattedPhone,
   removeFormattedZip,
 } from "../utils/removeFormatting.js";
+  function showSuccessAlert(message) {
+    const successAlert = document.getElementById('success-alert');
+    const successMessage = document.getElementById('success-message');
+    successMessage.textContent = message;
+    successAlert.classList.remove('hidden');
+  }
 
+  function showErrorAlert(message) {
+    const errorAlert = document.getElementById('error-alert');
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.textContent = message;
+    errorAlert.classList.remove('hidden');
+  }
 const form = document.getElementById("edit-user-form");
 
 function getUser() {
@@ -106,6 +118,7 @@ form.addEventListener("submit", async (event) => {
     city: form.city.value,
     state: form.state.value,
     zip: removeFormattedZip(form.zip.value),
+    role: form.role.value, // Certifique-se de que o campo role está sendo enviado
   };
 
   try {
@@ -120,12 +133,17 @@ form.addEventListener("submit", async (event) => {
       );
       localStorage.removeItem("User");
       localStorage.removeItem("userId");
-      window.location.href = "../pages/listusers.html";
+      showSuccessAlert(`O usuário "${userData.name}" foi atualizado com sucesso!`);
+      setTimeout(() => {
+        window.location.href = "../pages/listusers.html";
+      }, 2000);
     }, 500);
   } catch (error) {
     console.error("Erro ao atualizar o usuário:", error);
+    showErrorAlert("Erro ao atualizar o usuário. Tente novamente.");
   }
 });
+
 
 // Carrega os dados do usuário ao abrir a janela
 window.onload = () => {
