@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Registrar Usuário</title>
     <link rel="stylesheet" href="../styles/index.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
@@ -14,6 +14,12 @@
         crossorigin="anonymous" />
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        .main-content {
+            overflow-y: auto;
+            max-height: calc(100vh - 64px); /* Ajuste conforme necessário */
+        }
+    </style>
 </head>
 
 <body>
@@ -34,18 +40,15 @@
                   <i class="material-icons">home</i>
                   <span class="mx-3">Dashboard</span>
               </a>
-              
-              </a>
-              <!-- Altere esta linha -->
-              <a class="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25" href="./register.html">
+              <!-- Links que só devem aparecer para ADMIN -->
+              <a class="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25" href="./register.html" id="register-link">
                   <i class="material-icons">format_list_bulleted</i>
                   <span class="mx-3">Registrar Usuário</span>
               </a>
-              <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                        href="./listusers.html">
-                        <i class="material-icons">people</i>
-                        <span class="mx-3">Visualizar usuários</span>
-                    </a>
+              <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="./listusers.html" id="listusers-link">
+                  <i class="material-icons">people</i>
+                  <span class="mx-3">Visualizar usuários</span>
+              </a>
           </nav>
           
         </aside>
@@ -61,7 +64,7 @@
                 </div>
             </header>
             <!-- Main Section -->
-            <main class="bg-white p-8 rounded-lg shadow-md">
+            <main class="main-content bg-white p-8 rounded-lg shadow-md">
               <form id="signup-form" class="space-y-8">
                   <!-- Grupo de Informações Pessoais -->
                   <fieldset class="border border-gray-300 p-4 rounded-md">
@@ -142,6 +145,20 @@
                       </div>
                   </fieldset>
 
+                  <!-- Grupo de Role -->
+                  <fieldset class="border border-gray-300 p-4 rounded-md">
+                      <legend class="text-lg font-medium text-gray-600">Permissões</legend>
+                      <div class="grid grid-cols-1 gap-4 mt-4">
+                          <div>
+                              <label for="role" class="block text-sm font-medium text-gray-900 mb-2">Role</label>
+                              <select id="role" name="role" required class="w-full px-3 py-2 border rounded-md">
+                                  <option value="USER">Usuário</option>
+                                  <option value="ADMIN">Administrador</option>
+                              </select>
+                          </div>
+                      </div>
+                  </fieldset>
+
                   <div class="text-right mt-6">
                       <button type="submit"
                       class="middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -153,6 +170,13 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        const userCredentials = JSON.parse(localStorage.getItem('userCredentials'));
+        if (!userCredentials || userCredentials.role !== 'ADMIN') {
+          document.getElementById('register-link').style.display = 'none';
+          document.getElementById('listusers-link').style.display = 'none';
+        }
+      </script>
     <script src="../page-scripts/register.js"></script>
     <script src="../renderer.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>

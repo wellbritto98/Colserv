@@ -5,7 +5,7 @@ const prisma = require("../db"); // Importar a instância do Prisma
 const registerIpcHandlers = () => {
   ipcMain.handle("register-user", async (event, userData) => {
     try {
-      const { name, email, password, cpf, phone, address, city, state, zip } =
+      const { name, email, password, cpf, phone, address, city, state, zip, role } =
         userData;
 
       // Verificar se o email ou CPF já está cadastrado
@@ -30,10 +30,11 @@ const registerIpcHandlers = () => {
           city,
           state,
           zip,
+          role, // Adicione o campo role aqui
         },
       });
 
-      return { id: newUser.id, name: newUser.name, email: newUser.email };
+      return { id: newUser.id, name: newUser.name, email: newUser.email, role: newUser.role };
     } catch (error) {
       console.error("Erro ao cadastrar usuário:", error);
       throw error;
@@ -52,7 +53,7 @@ const registerIpcHandlers = () => {
         throw new Error("Senha incorreta");
       }
 
-      return { id: user.id, name: user.name, email: user.email };
+      return { id: user.id, name: user.name, email: user.email, role: user.role };
     } catch (error) {
       console.error("Erro ao logar usuário:", error);
       throw error;
@@ -74,6 +75,7 @@ const registerIpcHandlers = () => {
           city: true,
           state: true,
           zip: true,
+          role: true, // Adicione o campo role aqui
         },
       });
       return users;
@@ -83,31 +85,20 @@ const registerIpcHandlers = () => {
     }
   });
 
-  ipcMain.handle("update-user-info", async (event, userData) => {
+  ipcMain.handle("update-user", async (event, userData) => {
     try {
-      let hashedPassword;
-      if (userData.password.length >= 3) {
-        hashedPassword = await bcrypt.hash(userData.password, 10);
-      } else {
-        const existingUser = await prisma.user.findUnique({
-          where: { id: userData.id },
-          select: { password: true },
-        });
-
-        hashedPassword = existingUser.password;
-      }
-
       const updatedUser = await prisma.user.update({
         where: { id: userData.id },
         data: {
           name: userData.name,
           email: userData.email,
-          password: hashedPassword,
           phone: userData.phone,
           address: userData.address,
           city: userData.city,
           state: userData.state,
           zip: userData.zip,
+          role: userData.role, // Certifique-se de que o campo role está sendo atualizado
+          password: userData.password !== 0 ? await bcrypt.hash(userData.password, 10) : undefined,
         },
       });
       return updatedUser;
@@ -115,6 +106,6 @@ const registerIpcHandlers = () => {
       throw error;
     }
   });
-};
+}
 
 module.exports = { registerIpcHandlers };
