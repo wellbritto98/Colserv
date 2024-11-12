@@ -18,5 +18,7 @@ model User {
   city     String  @default("Not provided")        // Example default city
   state    String  @default("Not provided")        // Example default state
   zip      String  @default("00000")               // Example default ZIP code
+  role     String  @default("USER") 
 }
+
 

@@ -317,6 +317,19 @@
                 </div>
               </div>
             </fieldset>
+            <!-- Grupo de Role -->
+            <fieldset class="border border-gray-300 p-4 rounded-md">
+              <legend class="text-lg font-medium text-gray-600">Permissões</legend>
+              <div class="grid grid-cols-1 gap-4 mt-4">
+                  <div>
+                      <label for="role" class="block text-sm font-medium text-gray-900 mb-2">Role</label>
+                      <select id="role" name="role" required class="w-full px-3 py-2 border rounded-md">
+                          <option value="USER">Usuário</option>
+                          <option value="ADMIN">Administrador</option>
+                      </select>
+                  </div>
+              </div>
+          </fieldset>
 
             <div class="text-right mt-6">
               <button
@@ -326,12 +339,25 @@
               >
                 Salvar
               </button>
+              <!--botão para voltar para a lista de usuários-->
+              <a
+                href="./listusers.html"
+                class="middle none rounded-lg bg-gray-900 py-3 px-12 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              >
+                Voltar
+              </a>
             </div>
           </form>
         </main>
       </div>
     </div>
-
+    <script>
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user.role !== 'ADMIN') {
+        document.querySelector('a[href="./register.html"]').remove();
+        document.querySelector('a[href="./listusers.html"]').remove();
+      }
+    </script>
     <script type="module" src="../page-scripts/edituser.js" defer></script>
     <script src="../utils/formattingData.js" defer></script>
     <script src="../utils/formattingInput.js" defer></script>

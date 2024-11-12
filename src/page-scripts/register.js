@@ -1,17 +1,18 @@
-const form = document.getElementById('signup-form');
+const registerForm = document.getElementById('signup-form');
+const errorMessage = document.getElementById('error-message');
 
-form.addEventListener('submit', async (event) => {
+registerForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-
-  const name = form.name.value;
-  const email = form.email.value;
-  const password = form.password.value;
-  const cpf = form.cpf.value;
-  const phone = form.phone.value;
-  const address = form.address.value;
-  const city = form.city.value;
-  const state = form.state.value;
-  const zip = form.zip.value;
+  const name = registerForm.name.value;
+  const email = registerForm.email.value;
+  const password = registerForm.password.value;
+  const cpf = registerForm.cpf.value;
+  const phone = registerForm.phone.value;
+  const address = registerForm.address.value;
+  const city = registerForm.city.value;
+  const state = registerForm.state.value;
+  const zip = registerForm.zip.value;
+  const role = registerForm.role.value; // Adicione o campo role aqui
 
   try {
     const result = await window.electronAPI.registerUser({
@@ -23,13 +24,14 @@ form.addEventListener('submit', async (event) => {
       address,
       city,
       state,
-      zip
+      zip,
+      role, // Adicione o campo role aqui
     });
-    alert('Usuário cadastrado com sucesso:', result);
-    window.location.href = '../pages/signin.html';
-    // Aqui você pode redirecionar o usuário, mostrar uma mensagem de sucesso, etc.
+    console.log('Usuário registrado com sucesso:', result);
+    window.location.href = "../pages/signin.html";
   } catch (error) {
-    console.error('Erro ao cadastrar usuário:', error);
-    // Mostrar mensagem de erro ao usuário
+    console.error('Erro ao registrar usuário:', error);
+    errorMessage.textContent = 'Erro ao registrar usuário. Verifique os dados e tente novamente.';
+    errorMessage.classList.remove('hidden');
   }
 });

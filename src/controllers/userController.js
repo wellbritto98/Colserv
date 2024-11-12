@@ -5,7 +5,7 @@ const prisma = require("../db"); // Importar a instância do Prisma
 const registerIpcHandlers = () => {
   ipcMain.handle("register-user", async (event, userData) => {
     try {
-      const { name, email, password, cpf, phone, address, city, state, zip } =
+      const { name, email, password, cpf, phone, address, city, state, zip, role } =
         userData;
 
       // Verificar se o email ou CPF já está cadastrado
@@ -30,10 +30,11 @@ const registerIpcHandlers = () => {
           city,
           state,
           zip,
+          role, // Adicione o campo role aqui
         },
       });
 
-      return { id: newUser.id, name: newUser.name, email: newUser.email };
+      return { id: newUser.id, name: newUser.name, email: newUser.email, role: newUser.role };
     } catch (error) {
       console.error("Erro ao cadastrar usuário:", error);
       throw error;
@@ -52,7 +53,7 @@ const registerIpcHandlers = () => {
         throw new Error("Senha incorreta");
       }
 
-      return { id: user.id, name: user.name, email: user.email };
+      return { id: user.id, name: user.name, email: user.email, role: user.role };
     } catch (error) {
       console.error("Erro ao logar usuário:", error);
       throw error;
@@ -74,6 +75,7 @@ const registerIpcHandlers = () => {
           city: true,
           state: true,
           zip: true,
+          role: true, // Adicione o campo role aqui
         },
       });
       return users;
@@ -108,6 +110,7 @@ const registerIpcHandlers = () => {
           city: userData.city,
           state: userData.state,
           zip: userData.zip,
+          role: userData.role, // Adicione o campo role aqui
         },
       });
       return updatedUser;

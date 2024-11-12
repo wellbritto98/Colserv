@@ -30,6 +30,7 @@ function insertUserDataIntoForm(userData) {
   document.getElementById("city").value = userData.city;
   document.getElementById("state").value = userData.state;
   document.getElementById("zip").value = formatDataZip(userData.zip);
+  document.getElementById("role").value = userData.role;
 }
 
 function togglePasswordVisibility(button, index) {
