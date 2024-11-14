@@ -68,7 +68,8 @@
                                 <i class="material-icons text-gray-500">search</i>
                             </span>
 
-                            <input id="search-input" class="w-32 pl-10 pr-4 rounded-md form-input sm:w-64 focus:border-indigo-600"
+                            <input id="search-input"
+                                class="w-32 pl-10 pr-4 rounded-md form-input sm:w-64 focus:border-indigo-600"
                                 type="text" placeholder="Search">
                         </div>
                     </div>
@@ -174,10 +175,12 @@
     </div>
 
     <!-- Floating Action Button -->
-    <button
-        class="fixed bottom-10 right-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center focus:outline-none">
-        <a href="cadastroChamado.html"><i class="material-icons">add</i></a>
-    </button>
+    <a href="cadastroChamado.html">
+        <button
+            class="fixed bottom-10 right-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center focus:outline-none">
+            <i class="material-icons">add</i>
+        </button>
+    </a>
     <script>
         const user = JSON.parse(localStorage.getItem('user'));
         if (user.role !== 'ADMIN') {

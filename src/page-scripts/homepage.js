@@ -16,7 +16,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("registrar-usuario-link").style.display = "none";
     document.getElementById("visualizar-usuarios-link").style.display = "none";
   }
+
   let chamados = []; // Variável global para armazenar todos os chamados
+
   // Carregar chamados e preencher o dashboard
   try {
     chamados = await window.electronAPI.getAllChamados();
@@ -31,32 +33,38 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelector("#dashboard-indeferidos h4").textContent = indeferidos;
     document.querySelector("#dashboard-deferidos h4").textContent = deferidos;
 
-    // Preencher a tabela de chamados
     // Função para exibir chamados na tabela
     function renderTable(filteredChamados) {
       const chamadosTableBody = document.querySelector("table tbody");
       chamadosTableBody.innerHTML = ""; // Limpar linhas anteriores
       filteredChamados.forEach(chamado => {
         const statusClass = getStatusClass(chamado.status);
-        const row = `
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${chamado.id}</td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">${chamado.titulo}</div>
-              <div class="text-sm text-gray-500">${chamado.descricao}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <span class="inline-flex px-2 text-xs font-semibold leading-5 ${statusClass}">
-                ${chamado.status}
-              </span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(chamado.createdAt).toLocaleDateString()}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-            </td>
-          </tr>
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${chamado.id}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${chamado.titulo}</div>
+            <div class="text-sm text-gray-500">${chamado.descricao}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="inline-flex px-2 text-xs font-semibold leading-5 ${statusClass}">
+              ${chamado.status}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(chamado.createdAt).toLocaleDateString()}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <a href="#" class="view-chamado text-indigo-600 hover:text-indigo-900">Ver</a>
+          </td>
         `;
-        chamadosTableBody.insertAdjacentHTML("beforeend", row);
+        
+        // Adicionar evento de clique ao link "Ver"
+        row.querySelector('.view-chamado').addEventListener('click', (event) => {
+          event.preventDefault(); // Evita o comportamento padrão do link
+          localStorage.setItem("chamado", JSON.stringify(chamado)); // Salva o chamado no localStorage
+          window.location.href = "chamadoDetail.html"; // Redireciona para a página de detalhes
+        });
+
+        chamadosTableBody.appendChild(row);
       });
     }
 
@@ -73,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
       renderTable(filteredChamados); // Renderiza a tabela filtrada
     });
-  }catch (error) {
+  } catch (error) {
     console.error("Erro ao carregar chamados:", error);
   }
 });
@@ -91,3 +99,5 @@ function getStatusClass(status) {
       return "text-gray-800 bg-gray-100 rounded-full";
   }
 }
+
+
