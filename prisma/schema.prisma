@@ -24,5 +24,6 @@ model Chamado {
   id          Int       @id @default(autoincrement())
   titulo      String
   descricao   String
-  imagem      String
+  imagem      Bytes
 }
+

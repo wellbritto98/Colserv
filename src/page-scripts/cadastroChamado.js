@@ -7,21 +7,27 @@ form.addEventListener('submit', async (event) => {
   const descricao = form.descricao.value;
   const imagem = form.imagem.files[0];
 
-  console.log("Dados do chamado:");
-  console.log("Título:", titulo);
-  console.log("Descrição:", descricao);
-  console.log("Imagem:", imagem);
+  // Converter a imagem para base64
+  const reader = new FileReader();
+  reader.readAsDataURL(imagem);
 
-  try {
-    const chamadoData = await window.electronAPI.cadastrarChamado({
-      titulo,
-      descricao,
-      imagem
-    });
+  reader.onload = async () => {
+    try {
+      const chamadoData = await window.electronAPI.cadastrarChamado({
+        titulo,
+        descricao,
+        imagem: reader.result // Enviando a imagem como base64
+      });
 
-    alert('Chamado registrado com sucesso:', chamadoData);
-    window.location.href = '../pages/homepage.html';
-  } catch (error) {
-    console.error('Erro ao cadastrar chamado:', error);
-  }
+      alert('Chamado registrado com sucesso:', chamadoData);
+      window.location.href = '../pages/homepage.html';
+    } catch (error) {
+      console.error('Erro ao cadastrar chamado:', error);
+    }
+  };
+
+  reader.onerror = (error) => {
+    console.error('Erro ao ler a imagem:', error);
+  };
 });
+
