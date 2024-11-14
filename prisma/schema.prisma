@@ -22,9 +22,11 @@ model User {
 }
 
 model Chamado {
-  id          Int       @id @default(autoincrement())
-  titulo      String
-  descricao   String
-  imagem      String
+  id        Int     @id @default(autoincrement())
+  titulo    String
+  descricao String
+  imagem    String
+  status    String  @default("ABERTO") // Adiciona o campo status com um valor padrão
+  createdAt DateTime @default(now())   // Campo opcional para registrar a data de criação
 }
 

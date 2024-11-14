@@ -16,15 +16,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("registrar-usuario-link").style.display = "none";
     document.getElementById("visualizar-usuarios-link").style.display = "none";
   }
-
+  let chamados = []; // Variável global para armazenar todos os chamados
   // Carregar chamados e preencher o dashboard
   try {
-    const chamados = await window.electronAPI.invoke("get-chamados");
+    chamados = await window.electronAPI.getAllChamados();
 
     // Contar chamados por status
-    const abertos = chamados.filter(c => c.status === "Aberto").length;
-    const indeferidos = chamados.filter(c => c.status === "Indeferido").length;
-    const deferidos = chamados.filter(c => c.status === "Deferido").length;
+    const abertos = chamados.filter(c => c.status === "ABERTO").length;
+    const indeferidos = chamados.filter(c => c.status === "INDEFERIDO").length;
+    const deferidos = chamados.filter(c => c.status === "DEFERIDO").length;
 
     // Atualizar o contador no dashboard
     document.querySelector("#dashboard-abertos h4").textContent = abertos;
@@ -32,31 +32,48 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelector("#dashboard-deferidos h4").textContent = deferidos;
 
     // Preencher a tabela de chamados
-    const chamadosTableBody = document.querySelector("table tbody");
-    chamadosTableBody.innerHTML = ""; // Limpar linhas anteriores
-    chamados.forEach(chamado => {
-      const statusClass = getStatusClass(chamado.status); // Helper para classes de status
-      const row = `
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${chamado.id}</td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${chamado.titulo}</div>
-            <div class="text-sm text-gray-500">${chamado.descricao}</div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <span class="inline-flex px-2 text-xs font-semibold leading-5 ${statusClass}">
-              ${chamado.status}
-            </span>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(chamado.createdAt).toLocaleDateString()}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-          </td>
-        </tr>
-      `;
-      chamadosTableBody.insertAdjacentHTML("beforeend", row);
+    // Função para exibir chamados na tabela
+    function renderTable(filteredChamados) {
+      const chamadosTableBody = document.querySelector("table tbody");
+      chamadosTableBody.innerHTML = ""; // Limpar linhas anteriores
+      filteredChamados.forEach(chamado => {
+        const statusClass = getStatusClass(chamado.status);
+        const row = `
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${chamado.id}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">${chamado.titulo}</div>
+              <div class="text-sm text-gray-500">${chamado.descricao}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="inline-flex px-2 text-xs font-semibold leading-5 ${statusClass}">
+                ${chamado.status}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(chamado.createdAt).toLocaleDateString()}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
+            </td>
+          </tr>
+        `;
+        chamadosTableBody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    // Renderizar todos os chamados inicialmente
+    renderTable(chamados);
+
+    // Filtrar chamados ao digitar no campo de busca
+    const searchInput = document.getElementById("search-input");
+    searchInput.addEventListener("input", (event) => {
+      const query = event.target.value.toLowerCase();
+      const filteredChamados = chamados.filter(chamado =>
+        chamado.titulo.toLowerCase().includes(query) ||
+        chamado.descricao.toLowerCase().includes(query)
+      );
+      renderTable(filteredChamados); // Renderiza a tabela filtrada
     });
-  } catch (error) {
+  }catch (error) {
     console.error("Erro ao carregar chamados:", error);
   }
 });
@@ -64,11 +81,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Função auxiliar para definir a classe de status
 function getStatusClass(status) {
   switch (status) {
-    case "Aberto":
+    case "ABERTO":
       return "text-yellow-800 bg-yellow-100 rounded-full";
-    case "Indeferido":
+    case "INDEFERIDO":
       return "text-orange-800 bg-orange-100 rounded-full";
-    case "Deferido":
+    case "DEFERIDO":
       return "text-green-800 bg-green-100 rounded-full";
     default:
       return "text-gray-800 bg-gray-100 rounded-full";
