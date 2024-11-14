@@ -23,4 +23,17 @@ const cadastrarChamado = () => {
   });
 };
 
-module.exports = { cadastrarChamado };
+const getAllChamados = () => {
+  ipcMain.handle('get-chamados', async (event) => {
+    try {
+      const chamados = await prisma.chamado.findMany();
+
+      return chamados;
+    } catch (error) {
+      console.error('Erro ao buscar chamados:', error);
+      throw error;
+    }
+  });
+};
+
+module.exports = { cadastrarChamado, getAllChamados };

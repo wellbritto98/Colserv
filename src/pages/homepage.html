@@ -38,15 +38,17 @@
                         <span class="mx-3">Dashboard</span>
                     </a>
 
-        
 
-                    <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+
+                    <a id="registrar-usuario-link"
+                        class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
                         href="./register.html">
                         <i class="material-icons">format_list_bulleted</i>
                         <span class="mx-3">Registrar Usuário</span>
                     </a>
 
-                    <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+                    <a id="visualizar-usuarios-link"
+                        class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
                         href="./listusers.html">
                         <i class="material-icons">people</i>
                         <span class="mx-3">Visualizar usuários</span>
@@ -82,45 +84,42 @@
                         <div class="mt-4">
                             <div class="flex flex-wrap -mx-6">
                                 <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
-                                    <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                    <div id="dashboard-abertos"
+                                        class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
                                         <div
                                             class="flex items-center justify-center w-12 h-12 bg-indigo-600 bg-opacity-75 rounded-full">
                                             <span class="material-icons text-white text-3xl">assignment</span>
-                                            <!-- Ícone de relatório para chamados abertos -->
                                         </div>
-
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">5</h4>
+                                            <h4 class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-gray-500">Chamados abertos</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
-                                    <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                    <div id="dashboard-indeferidos"
+                                        class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
                                         <div
                                             class="flex items-center justify-center w-12 h-12 bg-orange-600 bg-opacity-75 rounded-full">
                                             <span class="material-icons text-white text-3xl">build</span>
-                                            <!-- Ícone de ferramentas para chamados indeferidos -->
                                         </div>
-
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
+                                            <h4 class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-gray-500">Chamados indeferidos</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
-                                    <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                    <div id="dashboard-deferidos"
+                                        class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
                                         <div
                                             class="flex items-center justify-center w-12 h-12 bg-pink-600 bg-opacity-75 rounded-full">
                                             <span class="material-icons text-white text-3xl">done_all</span>
-                                            <!-- Ícone de confirmação para chamados deferidos -->
                                         </div>
-
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
+                                            <h4 class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-gray-500">Chamados deferidos</div>
                                         </div>
                                     </div>
@@ -246,16 +245,17 @@
     </div>
 
     <!-- Floating Action Button -->
-<button  class="fixed bottom-10 right-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center focus:outline-none">
-    <a href="cadastroChamado.html"><i class="material-icons">add</i></a>
-</button>
-<script>
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user.role !== 'ADMIN') {
-      document.querySelector('a[href="./register.html"]').remove();
-      document.querySelector('a[href="./listusers.html"]').remove();
-    }
-  </script>
+    <button
+        class="fixed bottom-10 right-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center focus:outline-none">
+        <a href="cadastroChamado.html"><i class="material-icons">add</i></a>
+    </button>
+    <script>
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user.role !== 'ADMIN') {
+            document.querySelector('a[href="./register.html"]').remove();
+            document.querySelector('a[href="./listusers.html"]').remove();
+        }
+    </script>
     <!-- Scripts -->
     <script src="../renderer.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>

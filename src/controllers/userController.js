@@ -75,7 +75,7 @@ const registerIpcHandlers = () => {
           city: true,
           state: true,
           zip: true,
-          //role: true, // Adicione o campo role aqui
+          role: true
         },
       });
       return users;

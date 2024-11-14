@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   listUsers: () => ipcRenderer.invoke('list-users'), // Expor a função listUsers
   updateUser: (userData) => ipcRenderer.invoke('update-user', userData), // Expor a função updateUser
   cadastrarChamado: (chamadoData) => ipcRenderer.invoke('cadastro-chamado', chamadoData),
+  getAllChamados: (chamadoData) => ipcRenderer.invoke('get-chamados', chamadoData),
   storeUser: (userCredentials) => {
     console.log('Removendo dados do usuário anterior do localStorage');
     localStorage.removeItem('userCredentials');
