@@ -38,9 +38,9 @@
   "license": "MIT",
   "dependencies": {
     "@material-tailwind/html": "^2.3.2",
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^5.22.0",
     "bcrypt": "^5.1.1",
-    "colserv": "file:",
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "multer": "^1.4.5-lts.1"
   }
 }
