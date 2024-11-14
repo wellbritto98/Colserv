@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Registrar Usuário</title>
     <link rel="stylesheet" href="../styles/index.css" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -22,7 +22,13 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-  </head>
+      <style>
+        .main-content {
+            overflow-y: auto;
+            max-height: calc(100vh - 64px); /* Ajuste conforme necessário */
+        }
+    </style>
+</head>
 
   <body>
     <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
@@ -335,6 +341,13 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        const userCredentials = JSON.parse(localStorage.getItem('userCredentials'));
+        if (!userCredentials || userCredentials.role !== 'ADMIN') {
+          document.getElementById('register-link').style.display = 'none';
+          document.getElementById('listusers-link').style.display = 'none';
+        }
+      </script>
     <script src="../page-scripts/register.js"></script>
     <script src="../renderer.js"></script>
     <script

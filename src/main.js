@@ -33,6 +33,10 @@ const createWindow = async () => {
       await mainWindow.loadFile(path.join(__dirname, 'pages', 'signin.html'));
     }
   });
+    
+
+  // Load the index.html of the app.
+  await mainWindow.loadFile(path.join(__dirname, 'pages', 'signin.html'));
 
   // Load the index.html of the app.
   await mainWindow.loadFile(path.join(__dirname, 'pages', 'signin.html'));

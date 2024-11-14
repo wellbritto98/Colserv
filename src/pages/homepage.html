@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Homepage</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="../styles/index.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
@@ -38,22 +38,12 @@
                         <span class="mx-3">Dashboard</span>
                     </a>
 
-                    <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                        href="#">
-                        <i class="material-icons">view_quilt</i>
-                        <span class="mx-3">UI Elements</span>
-                    </a>
-
-                    <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                        href="#">
-                        <i class="material-icons">table_chart</i>
-                        <span class="mx-3">Tables</span>
-                    </a>
+        
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
                         href="./register.html">
                         <i class="material-icons">format_list_bulleted</i>
-                        <span class="mx-3">Registrar usuario</span>
+                        <span class="mx-3">Registrar Usuário</span>
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
@@ -259,8 +249,13 @@
 <button  class="fixed bottom-10 right-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center focus:outline-none">
     <a href="cadastroChamado.html"><i class="material-icons">add</i></a>
 </button>
-</a>
-
+<script>
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user.role !== 'ADMIN') {
+      document.querySelector('a[href="./register.html"]').remove();
+      document.querySelector('a[href="./listusers.html"]').remove();
+    }
+  </script>
     <!-- Scripts -->
     <script src="../renderer.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
